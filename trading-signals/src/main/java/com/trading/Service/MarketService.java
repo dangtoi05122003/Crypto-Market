@@ -16,9 +16,13 @@ import com.trading.websocket.MarketTick;
 public class MarketService {
     @Autowired
     private strategy strategy;
+    @Autowired
+    private AccountService accountService;
     @Async
     @EventListener
     public void MarketPrinter(MarketEvent event) {
+        double balance = accountService.getUsdtBalance();
+        System.out.println("balance: " + balance);
         MarketTick tick = event.getTick();
         MarketState state = new MarketState();
         state.update(tick);
